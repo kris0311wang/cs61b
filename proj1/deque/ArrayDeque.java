@@ -1,9 +1,11 @@
 package deque;
 
+import java.util.Iterator;
+
 import static edu.princeton.cs.algs4.StdOut.print;
 import static edu.princeton.cs.algs4.StdOut.println;
 
-public class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T>,Iterable<T> {
     protected int capacity =8;
     protected T[] array=null;
     protected int head;
@@ -93,5 +95,52 @@ public class ArrayDeque<T> implements Deque<T>{
         return array[(head+index)%capacity];
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayDequeIterator<T>();
+    }
+    private class ArrayDequeIterator<T> implements Iterator<T>{
+        int index=0;
+        @Override
+        public boolean hasNext() {
+            if(tail==index){
+                return false;
+            }
+            return true;
+        }
+        public ArrayDequeIterator(){
+            index=head;
+        }
 
+        @Override
+        public T next() {
+            int oldindex=index;
+            index=(index+1)%capacity;
+            return (T) array[oldindex];
+        }
+
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj==null){
+            return false;
+        }
+        if (obj==this){
+            return true;
+        }
+        if (obj.getClass()!=this.getClass()){
+            return false;
+        }
+        ArrayDeque<T> other=(ArrayDeque<T>) obj;
+        if (size()!=other.size()){
+            return false;
+        }
+        for (int i = 0; i < size(); i++) {
+            if (!get(i).equals(other.get(i))){
+                return false;
+            }
+        }
+        return true;
+    }
 }

@@ -1,9 +1,11 @@
 package deque;
 
+import java.util.Iterator;
+
 import static edu.princeton.cs.algs4.StdOut.print;
 import static edu.princeton.cs.algs4.StdOut.println;
 
-class LinkedListDeque<T> implements Deque<T>{
+class LinkedListDeque<T> implements Deque<T>,Iterable<T>{
     protected Node<T> sentinal= new Node<T>(null, null, null);
     protected int size;
     public LinkedListDeque(){
@@ -100,5 +102,50 @@ class LinkedListDeque<T> implements Deque<T>{
             this.pre=pre;
             this.post=post;
         }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListDequeIterator<T>();
+    }
+    private class LinkedListDequeIterator<T> implements Iterator<T>{
+        Node<T> current= (Node<T>) sentinal;
+        @Override
+        public boolean hasNext() {
+            return current.post!=sentinal;
+        }
+
+        @Override
+        public T next() {
+            current=current.post;
+            return current.value;
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj==null){
+            return false;
+        }
+        if (obj==this){
+            return true;
+        }
+        if (obj.getClass()!=this.getClass()){
+            return false;
+        }
+        LinkedListDeque<T> other=(LinkedListDeque<T>) obj;
+        if (size()!=other.size()){
+            return false;
+        }
+        Node<T> temp1=sentinal.post;
+        Node<T> temp2=other.sentinal.post;
+        while(temp1!=sentinal){
+            if (!temp1.value.equals(temp2.value)){
+                return false;
+            }
+            temp1=temp1.post;
+            temp2=temp2.post;
+        }
+        return true;
     }
 }

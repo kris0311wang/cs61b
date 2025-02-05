@@ -1,6 +1,10 @@
 package deque;
 
+import afu.org.checkerframework.checker.igj.qual.I;
 import org.junit.Test;
+
+import java.util.StringJoiner;
+
 import static org.junit.Assert.*;
 
 /** Performs some basic linked list tests. */
@@ -164,5 +168,36 @@ public class LinkedListDequeTest {
         assertEquals(1, lld1.size());
         lld1.removeFirst();
         assertEquals(0, lld1.size());
+    }
+    @Test
+    /* Test that iterator works well */
+    public void iterationTest(){
+        LinkedListDeque<Integer> lld1=new LinkedListDeque<Integer>();
+        lld1.addFirst(10);
+        lld1.addFirst(20);
+        lld1.addFirst(30);
+        StringJoiner sj=new StringJoiner(" ");
+        for(int i:lld1){
+            sj.add(String.valueOf(i));
+        }
+        assertEquals("30 20 10",sj.toString());
+    }
+    @Test
+    /* Test equals */
+    public void equalsTest(){
+        LinkedListDeque<Integer> lld1=new LinkedListDeque<Integer>();
+        LinkedListDeque<Integer> lld2=new LinkedListDeque<Integer>();
+        LinkedListDeque<Integer> lld3=new LinkedListDeque<Integer>();
+        lld1.addFirst(10);
+        lld1.addFirst(20);
+        lld1.addFirst(30);
+        lld2.addFirst(10);
+        lld2.addFirst(20);
+        lld2.addFirst(30);
+        lld3.addFirst(10);
+        lld3.addFirst(20);
+        lld3.addFirst(40);
+        assertTrue(lld1.equals(lld2));
+        assertFalse(lld1.equals(lld3));
     }
 }
