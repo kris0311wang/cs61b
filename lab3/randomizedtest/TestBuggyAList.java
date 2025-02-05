@@ -49,11 +49,9 @@ public class TestBuggyAList {
         }
         assertArrayEquals(expected, get);
     }
-    @Test
-    public void randomizedtest(){
+    public void randomizedTest(int N) {
         AListNoResizing<Integer> L = new AListNoResizing<>();
 
-        int N = 500;
         for (int i = 0; i < N; i += 1) {
             int operationNumber = StdRandom.uniform(0, 2);
             if (operationNumber == 0) {
@@ -67,5 +65,10 @@ public class TestBuggyAList {
                 System.out.println("size: " + size);
             }
         }
+    }
+
+    @Test
+    public void testRandomizedTestSmall() {
+        randomizedTest(500);
     }
 }

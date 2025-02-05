@@ -3,7 +3,7 @@ package deque;
 import static edu.princeton.cs.algs4.StdOut.print;
 import static edu.princeton.cs.algs4.StdOut.println;
 
-class ArrayDeque<T> implements Deque<T>{
+public class ArrayDeque<T> implements Deque<T>{
     protected int capacity =8;
     protected T[] array=null;
     protected int head;
